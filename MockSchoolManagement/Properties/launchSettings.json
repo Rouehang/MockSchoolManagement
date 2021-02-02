@@ -3,18 +3,25 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51233",
+      "applicationUrl": "http://localhost:3290",
       "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
+      //命名名称
       "commandName": "IISExpress",
+      //是否进行浏览器的加载
       "launchBrowser": true,
+      //环境变量
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "MyKey": "launchsettings.json中MyKey的值"
-      }
+        //开发环境
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MyKey": "appsetting.launchSetting.json Myke"
+      },
+     
+                  
+
     },
     "MockSchoolManagement": {
       "commandName": "Project",

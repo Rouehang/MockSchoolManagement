@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,10 @@ namespace MockSchoolManagement
     public class Startup
     {
 
-        private IConfiguration _configuration;
+        //依赖注入  
+        private IConfiguration _configuration { get; set; }
+
+        //注入服务
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -38,6 +42,7 @@ namespace MockSchoolManagement
             //当是开发环境才会提示开发异常页面
             if (env.IsDevelopment())
             {
+                //开发异常页面
                 app.UseDeveloperExceptionPage();
             }
 
@@ -45,8 +50,15 @@ namespace MockSchoolManagement
             {
                 //防止乱码
                 context.Response.ContentType = "text/plain;charset=utf-8";
+
+                ////获取当前进程名
+                //var processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+                //confi
+
                 //注入后通过_configuration访问MyKey
-                await context.Response.WriteAsync(_configuration["MyKey"]);
+                var configuration = _configuration["MyKey"];
+                //await context.Response.WriteAsync();
+                await context.Response.WriteAsync(configuration);
             });
 
             app.UseRouting();
@@ -61,7 +73,7 @@ namespace MockSchoolManagement
                 endpoints.MapGet("/", async context =>
                 {
                     var processName = System.Diagnostics.Process.
-                   GetCurrentProcess().ProcessName;
+                    GetCurrentProcess().ProcessName;
                     await context.Response.WriteAsync(processName);
                 });
             });

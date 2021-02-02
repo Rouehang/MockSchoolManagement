@@ -1,12 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+	  <!--目标框架--> 
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
+	  <!--
+	  指定应用程序的托管形式
+	  InProcess：进程内
+	  OutOfProcess：进程外
+	  -->
 	  <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+	  <!--<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>-->
 
 	  <UserSecretsId>f34ccd4f-a063-44f5-9d89-b87c705a8205</UserSecretsId>
 	  
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
 
 </Project>
