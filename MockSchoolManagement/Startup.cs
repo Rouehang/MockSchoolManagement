@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MockSchoolManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,10 @@ namespace MockSchoolManagement
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+
+            //依赖注入
+            services.AddSingleton<IStudentRepository, MockStudentRepository>();
         }
 
         /// <summary>
@@ -39,106 +44,133 @@ namespace MockSchoolManagement
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILogger<Startup> logger)
         {
-            //当是开发环境才会提示开发异常页面
             if (env.IsDevelopment())
             {
-                DeveloperExceptionPageOptions developerExceptionPageOptions = new DeveloperExceptionPageOptions();
-                developerExceptionPageOptions.SourceCodeLineCount = 10;
-                //开发异常页面 当关闭后则不会弹出异常
-                app.UseDeveloperExceptionPage(developerExceptionPageOptions);
+                app.UseDeveloperExceptionPage();
             }
-            #region 测试中间件
-            //app.Use(async (context, next) =>
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+     
+
+            #region 旧代码
+            ////当是开发环境才会提示开发异常页面
+            //if (env.IsDevelopment())
             //{
-            //    context.Response.ContentType = "text/plain;charset=utf-8";
+            //    DeveloperExceptionPageOptions developerExceptionPageOptions = new DeveloperExceptionPageOptions();
+            //    developerExceptionPageOptions.SourceCodeLineCount = 10;
+            //    //开发异常页面 当关闭后则不会弹出异常
+            //    app.UseDeveloperExceptionPage(developerExceptionPageOptions);
+            //}
+            //#region 测试中间件
+            ////app.Use(async (context, next) =>
+            ////{
+            ////    context.Response.ContentType = "text/plain;charset=utf-8";
 
-            //    logger.LogInformation("M1:传入请求");
+            ////    logger.LogInformation("M1:传入请求");
 
-            //    await next();
+            ////    await next();
 
-            //    logger.LogInformation("M1:传出请求");
-            //});
+            ////    logger.LogInformation("M1:传出请求");
+            ////});
 
-            //app.Use(async (context, next) =>
-            //{
+            ////app.Use(async (context, next) =>
+            ////{
 
 
-            //    logger.LogInformation("M2:传入请求");
+            ////    logger.LogInformation("M2:传入请求");
 
-            //    await next();
+            ////    await next();
 
-            //    logger.LogInformation("M2:传出请求");
-            //});
+            ////    logger.LogInformation("M2:传出请求");
+            ////});
+
+
+            ////app.Run(async (context) =>
+            ////{
+
+            ////    ////防止乱码
+            ////    //context.Response.ContentType = "text/plain;charset=utf-8";
+
+            ////    #region 测试
+            ////    ////获取当前进程名
+            ////    //var processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+            ////    //confi
+
+            ////    ////注入后通过_configuration访问MyKey
+            ////    //var configuration = _configuration["MyKey"];
+            ////    //await context.Response.WriteAsync();
+            ////    #endregion
+            ////    logger.LogInformation("M3:处理请求，生成响应");
+            ////    await context.Response.WriteAsync("Hello World");
+            ////});
+            //#endregion
+
+
+            //#region 设置默认文件中间件
+
+            //DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
+
+            //defaultFilesOptions.DefaultFileNames.Clear();
+            //defaultFilesOptions.DefaultFileNames.Add("52abp.html");
+
+            ////添加默认文件中间件  
+            //app.UseDefaultFiles(defaultFilesOptions);
+
+            ////index.html  index.htm 默认   default.html  default.htm
+
+            ////静态文件中间介
+            //app.UseStaticFiles();
+
+
+            //#endregion
+
+            //FileServerOptions fileServerOptions = new FileServerOptions();
+            //fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            //fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("52abp.html");
+
+            //app.UseFileServer(fileServerOptions);
 
 
             //app.Run(async (context) =>
             //{
 
-            //    ////防止乱码
-            //    //context.Response.ContentType = "text/plain;charset=utf-8";
+            //    //////防止乱码
+            //    ////context.Response.ContentType = "text/plain;charset=utf-8";
+            //    //throw new Exception("您的请求在管道中发生了一些错误，请检查");
+            //    await context.Response.WriteAsync("Hosting Environment :"+env.EnvironmentName);  
+            //});
 
-            //    #region 测试
-            //    ////获取当前进程名
-            //    //var processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
-            //    //confi
+            //app.UseRouting();
 
-            //    ////注入后通过_configuration访问MyKey
-            //    //var configuration = _configuration["MyKey"];
-            //    //await context.Response.WriteAsync();
-            //    #endregion
-            //    logger.LogInformation("M3:处理请求，生成响应");
-            //    await context.Response.WriteAsync("Hello World");
+            //app.UseEndpoints(endpoints =>
+            //{
+
+            //    endpoints.MapGet("/", async context =>
+            //    {
+            //        var processName = System.Diagnostics.Process.
+            //        GetCurrentProcess().ProcessName;
+            //        await context.Response.WriteAsync(processName);
+            //    });
             //});
             #endregion
-
-
-            #region 设置默认文件中间件
-
-            DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
-
-            defaultFilesOptions.DefaultFileNames.Clear();
-            defaultFilesOptions.DefaultFileNames.Add("52abp.html");
-
-            //添加默认文件中间件  
-            app.UseDefaultFiles(defaultFilesOptions);
-
-            //index.html  index.htm 默认   default.html  default.htm
-
-            //静态文件中间介
-            app.UseStaticFiles();
-
-
-            #endregion
-
-            FileServerOptions fileServerOptions = new FileServerOptions();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("52abp.html");
-
-            app.UseFileServer(fileServerOptions);
-
-
-
-            app.Run(async (context) =>
-            {
-
-                ////防止乱码
-                //context.Response.ContentType = "text/plain;charset=utf-8";
-                throw new Exception("您的请求在管道中发生了一些错误，请检查");
-                await context.Response.WriteAsync("Hello World");  
-            });
-
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-
-                endpoints.MapGet("/", async context =>
-                {
-                    var processName = System.Diagnostics.Process.
-                    GetCurrentProcess().ProcessName;
-                    await context.Response.WriteAsync(processName);
-                });
-            });
         }
     }
 }

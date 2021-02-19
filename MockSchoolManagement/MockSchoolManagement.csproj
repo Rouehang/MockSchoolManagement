@@ -11,6 +11,7 @@
 	  <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
 	  <!--<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>-->
 
+	  <!--管理文件的key值-->
 	  <UserSecretsId>f34ccd4f-a063-44f5-9d89-b87c705a8205</UserSecretsId>
 	  
   </PropertyGroup>
