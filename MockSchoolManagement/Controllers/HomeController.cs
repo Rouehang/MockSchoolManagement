@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MockSchoolManagement.Models;
+using MockSchoolManagement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace MockSchoolManagement.Controllers
 {
     public class HomeController : Controller
     {
-      
+
         private IStudentRepository _studentRepository { get; set; }
 
         /// <summary>
@@ -26,11 +27,17 @@ namespace MockSchoolManagement.Controllers
             return _studentRepository.GetStudent(1).Name;
         }
 
-        public ObjectResult Detail()
+        public IActionResult Detail()
         {
-            Student student = _studentRepository.GetStudent(1);
 
-            return new ObjectResult(student);
+
+            HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+            {
+                Student = _studentRepository.GetStudent(1),
+                PageTitle = "学生详细信息"
+            };
+
+            return View(homeDetailsViewModel);
 
 
         }

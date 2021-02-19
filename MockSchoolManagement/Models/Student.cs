@@ -29,5 +29,6 @@ namespace MockSchoolManagement.Models
         /// 学生Emial
         /// </summary>
         public string Email { get; set; }
+
     }
 }

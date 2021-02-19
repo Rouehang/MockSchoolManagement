@@ -24,6 +24,22 @@ namespace MockSchoolManagement.Models
 
         }
 
+        /// <summary>
+        /// 查询出所有学生信息
+        /// </summary>
+        /// <returns>返回所有学生类型：IEnumerable[Student]</returns>
+        public IEnumerable<Student> GetAllStudents()
+        {
+            var query = _studentList.ToList();
+
+            return query;
+        }
+
+        /// <summary>
+        /// 查询单个学生信息
+        /// </summary>
+        /// <param name="id">IInt类型 学生Id</param>
+        /// <returns>返回学生信息：Student类型</returns>
         public Student GetStudent(int id)
         {
           var student=  _studentList.FirstOrDefault(p => p.Id == id);
