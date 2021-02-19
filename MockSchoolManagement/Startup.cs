@@ -15,17 +15,17 @@ namespace MockSchoolManagement
     public class Startup
     {
 
-        //ÒÀÀµ×¢Èë  
+        //ä¾èµ–æ³¨å…¥  
         private IConfiguration _configuration { get; set; }
 
-        //×¢Èë·şÎñ
+        //æ³¨å…¥æœåŠ¡
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         /// <summary>
-        /// ConfigureServices()·½·¨ÅäÖÃÓ¦ÓÃ³ÌĞòËùĞèµÄ·şÎñ¡£
+        /// ConfigureServices()æ–¹æ³•é…ç½®åº”ç”¨ç¨‹åºæ‰€éœ€çš„æœåŠ¡ã€‚
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
@@ -33,78 +33,112 @@ namespace MockSchoolManagement
         }
 
         /// <summary>
-        /// Configure()·½·¨ÅäÖÃÓ¦ÓÃ³ÌĞòµÄÇëÇó´¦Àí¹ÜµÀ¡£
+        /// Configure()æ–¹æ³•é…ç½®åº”ç”¨ç¨‹åºçš„è¯·æ±‚å¤„ç†ç®¡é“ã€‚
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILogger<Startup> logger)
         {
-            //µ±ÊÇ¿ª·¢»·¾³²Å»áÌáÊ¾¿ª·¢Òì³£Ò³Ãæ
+            //å½“æ˜¯å¼€å‘ç¯å¢ƒæ‰ä¼šæç¤ºå¼€å‘å¼‚å¸¸é¡µé¢
             if (env.IsDevelopment())
             {
-                //¿ª·¢Òì³£Ò³Ãæ
-                app.UseDeveloperExceptionPage();
+                DeveloperExceptionPageOptions developerExceptionPageOptions = new DeveloperExceptionPageOptions();
+                developerExceptionPageOptions.SourceCodeLineCount = 10;
+                //å¼€å‘å¼‚å¸¸é¡µé¢ å½“å…³é—­ååˆ™ä¸ä¼šå¼¹å‡ºå¼‚å¸¸
+                app.UseDeveloperExceptionPage(developerExceptionPageOptions);
             }
+            #region æµ‹è¯•ä¸­é—´ä»¶
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.ContentType = "text/plain;charset=utf-8";
 
-            app.Use(async (context, next) =>
-            {
-                context.Response.ContentType = "text/plain;charset=utf-8";
+            //    logger.LogInformation("M1:ä¼ å…¥è¯·æ±‚");
 
-                logger.LogInformation("M1:´«ÈëÇëÇó");
-            
-                await next();
+            //    await next();
 
-                logger.LogInformation("M1:´«³öÇëÇó");
-            });
+            //    logger.LogInformation("M1:ä¼ å‡ºè¯·æ±‚");
+            //});
 
-            app.Use(async (context, next) =>
-            {
-                context.Response.ContentType = "text/plain;charset=utf-8";
+            //app.Use(async (context, next) =>
+            //{
 
-                logger.LogInformation("M2:´«ÈëÇëÇó");
 
-                await next();
+            //    logger.LogInformation("M2:ä¼ å…¥è¯·æ±‚");
 
-                logger.LogInformation("M2:´«³öÇëÇó");
-            });
-      
+            //    await next();
+
+            //    logger.LogInformation("M2:ä¼ å‡ºè¯·æ±‚");
+            //});
+
+
+            //app.Run(async (context) =>
+            //{
+
+            //    ////é˜²æ­¢ä¹±ç 
+            //    //context.Response.ContentType = "text/plain;charset=utf-8";
+
+            //    #region æµ‹è¯•
+            //    ////è·å–å½“å‰è¿›ç¨‹å
+            //    //var processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+            //    //confi
+
+            //    ////æ³¨å…¥åé€šè¿‡_configurationè®¿é—®MyKey
+            //    //var configuration = _configuration["MyKey"];
+            //    //await context.Response.WriteAsync();
+            //    #endregion
+            //    logger.LogInformation("M3:å¤„ç†è¯·æ±‚ï¼Œç”Ÿæˆå“åº”");
+            //    await context.Response.WriteAsync("Hello World");
+            //});
+            #endregion
+
+
+            #region è®¾ç½®é»˜è®¤æ–‡ä»¶ä¸­é—´ä»¶
+
+            DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
+
+            defaultFilesOptions.DefaultFileNames.Clear();
+            defaultFilesOptions.DefaultFileNames.Add("52abp.html");
+
+            //æ·»åŠ é»˜è®¤æ–‡ä»¶ä¸­é—´ä»¶  
+            app.UseDefaultFiles(defaultFilesOptions);
+
+            //index.html  index.htm é»˜è®¤   default.html  default.htm
+
+            //é™æ€æ–‡ä»¶ä¸­é—´ä»‹
+            app.UseStaticFiles();
+
+
+            #endregion
+
+            FileServerOptions fileServerOptions = new FileServerOptions();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("52abp.html");
+
+            app.UseFileServer(fileServerOptions);
+
+
 
             app.Run(async (context) =>
             {
 
-                ////·ÀÖ¹ÂÒÂë
+                ////é˜²æ­¢ä¹±ç 
                 //context.Response.ContentType = "text/plain;charset=utf-8";
-
-                #region ²âÊÔ
-                ////»ñÈ¡µ±Ç°½ø³ÌÃû
-                //var processName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
-                //confi
-
-                ////×¢ÈëºóÍ¨¹ı_configuration·ÃÎÊMyKey
-                //var configuration = _configuration["MyKey"];
-                //await context.Response.WriteAsync();
-                #endregion
-                logger.LogInformation("M3:´«ÈëÇëÇó");
-                await context.Response.WriteAsync("Hello World");
-                logger.LogInformation("M3:´«³öÇëÇó");
+                throw new Exception("æ‚¨çš„è¯·æ±‚åœ¨ç®¡é“ä¸­å‘ç”Ÿäº†ä¸€äº›é”™è¯¯ï¼Œè¯·æ£€æŸ¥");
+                await context.Response.WriteAsync("Hello World");  
             });
 
-            //app.UseRouting();
+            app.UseRouting();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    //endpoints.MapGet("/", async context =>
-            //    //{
-            //    //    await context.Response.WriteAsync("Hello World!");
-            //    //});
+            app.UseEndpoints(endpoints =>
+            {
 
-            //    endpoints.MapGet("/", async context =>
-            //    {
-            //        var processName = System.Diagnostics.Process.
-            //        GetCurrentProcess().ProcessName;
-            //        await context.Response.WriteAsync(processName);
-            //    });
-            //});
+                endpoints.MapGet("/", async context =>
+                {
+                    var processName = System.Diagnostics.Process.
+                    GetCurrentProcess().ProcessName;
+                    await context.Response.WriteAsync(processName);
+                });
+            });
         }
     }
 }
