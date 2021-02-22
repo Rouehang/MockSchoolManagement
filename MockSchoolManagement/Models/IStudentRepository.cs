@@ -14,6 +14,10 @@ namespace MockSchoolManagement.Models
         /// <returns></returns>
         Student GetStudent(int id);
 
+        /// <summary>
+        /// 查询出学生信息集合
+        /// </summary>
+        /// <returns>返回学生信息列表：IEnumerable[Student]类型</returns>
         IEnumerable<Student> GetAllStudents();
     }
 }

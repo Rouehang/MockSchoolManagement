@@ -11,8 +11,14 @@ namespace MockSchoolManagement.ViewModels
     /// </summary>
     public class HomeDetailsViewModel
     {
+        /// <summary>
+        /// 老师信息
+        /// </summary>
         public Student Student { get; set; }
 
+        /// <summary>
+        /// 页面名称（标题）
+        /// </summary>
         public string PageTitle { get; set; }
     }
 }

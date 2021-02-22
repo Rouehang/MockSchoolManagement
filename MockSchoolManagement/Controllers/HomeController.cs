@@ -21,10 +21,11 @@ namespace MockSchoolManagement.Controllers
         {
             _studentRepository = studentRepository;
         }
-        public string Index()
+        public IActionResult Index()
         {
             //返回学生名字
-            return _studentRepository.GetStudent(1).Name;
+            var students = _studentRepository.GetAllStudents();
+            return View(students);
         }
 
         public IActionResult Detail()
