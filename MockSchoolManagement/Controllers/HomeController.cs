@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MockSchoolManagement.Controllers
 {
+    //[Route("[controller]/[action]")]
     public class HomeController : Controller
     {
 
@@ -21,6 +22,10 @@ namespace MockSchoolManagement.Controllers
         {
             _studentRepository = studentRepository;
         }
+
+        //[Route("")]
+        //[Route("~/")]
+        //[Route("~/Home")]
         public IActionResult Index()
         {
             //返回学生名字
@@ -28,13 +33,16 @@ namespace MockSchoolManagement.Controllers
             return View(students);
         }
 
-        public IActionResult Detail()
+        ////[Route("Detail/{id?}")]
+        //[Route("{id?}")]
+        public IActionResult Detail(int? id)
         {
 
 
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-                Student = _studentRepository.GetStudent(1),
+                //当Id为空是输入1 当有值时则为id
+                Student = _studentRepository.GetStudent(id??1),
                 PageTitle = "学生详细信息"
             };
 

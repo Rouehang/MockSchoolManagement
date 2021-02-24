@@ -55,12 +55,15 @@ namespace MockSchoolManagement
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
+
+            //路由设置
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
