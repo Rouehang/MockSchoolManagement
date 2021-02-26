@@ -15,9 +15,9 @@ namespace MockSchoolManagement.Models
         {
             _studentList = new List<Student>()
             {
-                new Student() {Id = 1,Name = "张三",Major = "计算机科学",Email ="zhangsan@52abp.com" },
-                new Student() {Id = 2,Name = "李四",Major = "物流",Email ="lisi@52abp.com" },
-                new Student() {Id = 3,Name = "赵六",Major = "电子商务",Email ="zhaoliu@52abp.com" }
+                new Student() {Id = 1,Name = "张三",ClassName=ClassNameEnum.FirstGrade,Major = "计算机科学",Email ="zhangsan@52abp.com" },
+                new Student() {Id = 2,Name = "李四",ClassName=ClassNameEnum.GradeThree,Major = "物流",Email ="lisi@52abp.com" },
+                new Student() {Id = 3,Name = "赵六",ClassName=ClassNameEnum.FirstGrade,Major = "电子商务",Email ="zhaoliu@52abp.com" }
 
 
             };

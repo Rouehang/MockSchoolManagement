@@ -23,6 +23,10 @@ namespace MockSchoolManagement.Controllers
             _studentRepository = studentRepository;
         }
 
+        /// <summary>
+        /// 主页 学生列表
+        /// </summary>
+        /// <returns></returns>
         //[Route("")]
         //[Route("~/")]
         //[Route("~/Home")]
@@ -33,6 +37,11 @@ namespace MockSchoolManagement.Controllers
             return View(students);
         }
 
+        /// <summary>
+        /// 通过Id查询出单个学生列表
+        /// </summary>
+        /// <param name="id">参数类型：Int （学生Id）</param>
+        /// <returns></returns>
         ////[Route("Detail/{id?}")]
         //[Route("{id?}")]
         public IActionResult Detail(int? id)
@@ -47,8 +56,12 @@ namespace MockSchoolManagement.Controllers
             };
 
             return View(homeDetailsViewModel);
+        }
 
+        public IActionResult Create()
+        {
 
+            return View();
         }
     }
 }

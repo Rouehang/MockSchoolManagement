@@ -30,5 +30,9 @@ namespace MockSchoolManagement.Models
         /// </summary>
         public string Email { get; set; }
 
+        /// <summary>
+        /// 学生年纪
+        /// </summary>
+        public ClassNameEnum ClassName { get; internal set; }
     }
 }
