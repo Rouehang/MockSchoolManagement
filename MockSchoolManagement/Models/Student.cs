@@ -45,6 +45,6 @@ namespace MockSchoolManagement.Models
         /// </summary>
         [Required(ErrorMessage = "请输入年纪")]
         [Display(Name = "学生年纪")]
-        public ClassNameEnum ClassName { get; internal set; }
+        public ClassNameEnum? ClassName { get; internal set; }
     }
 }
