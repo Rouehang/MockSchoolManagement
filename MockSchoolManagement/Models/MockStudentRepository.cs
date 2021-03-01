@@ -19,9 +19,20 @@ namespace MockSchoolManagement.Models
                 new Student() {Id = 2,Name = "李四",ClassName=ClassNameEnum.GradeThree,Major = "物流",Email ="lisi@52abp.com" },
                 new Student() {Id = 3,Name = "赵六",ClassName=ClassNameEnum.FirstGrade,Major = "电子商务",Email ="zhaoliu@52abp.com" }
 
-
             };
 
+        }
+
+        /// <summary>
+        /// 添加学生
+        /// </summary>
+        /// <param name="student">参数类型：Student（添加学生信息）</param>
+        /// <returns>返回添加的学生信息 Student</returns>
+        public Student AddStudent(Student student)
+        {
+            student.Id = _studentList.Max(s => s.Id) + 1;
+            _studentList.Add(student);
+            return student;
         }
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace MockSchoolManagement.Models
         public string Email { get; set; }
 
         /// <summary>
-        /// 学生年纪
+        /// 学生年级
         /// </summary>
         public ClassNameEnum ClassName { get; internal set; }
     }

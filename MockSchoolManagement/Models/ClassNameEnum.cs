@@ -13,21 +13,21 @@ namespace MockSchoolManagement.Models
         /// <summary>
         /// 无
         /// </summary>
-        None = 1,
-        
+        None = 0,
+
         /// <summary>
         /// 一年级
         /// </summary>
-        FirstGrade = 2,
+        FirstGrade = 1,
 
         /// <summary>
         /// 二年级
         /// </summary>
-        SecondGrade = 3,
+        SecondGrade = 2,
 
         /// <summary>
         /// 三年级
         /// </summary>
-        GradeThree = 4,
+        GradeThree = 3,
     }
 }

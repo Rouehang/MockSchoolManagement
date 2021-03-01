@@ -46,8 +46,6 @@ namespace MockSchoolManagement.Controllers
         //[Route("{id?}")]
         public IActionResult Detail(int? id)
         {
-
-
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
                 //当Id为空是输入1 当有值时则为id
@@ -58,10 +56,29 @@ namespace MockSchoolManagement.Controllers
             return View(homeDetailsViewModel);
         }
 
+
+        /// <summary>
+        /// 展示添加学生的界面
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult Create()
         {
 
             return View();
+        }
+
+        /// <summary>
+        /// 添加学生
+        /// </summary>
+        /// <param name="student">参数类型：Student</param>
+        /// <returns></returns>
+        [HttpPost]
+        public RedirectToActionResult Create(Student student)
+        {
+            Student newStudent = _studentRepository.AddStudent(student);
+
+            return RedirectToAction("Detail",new { id = student.Id });
         }
     }
 }

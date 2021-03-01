@@ -19,5 +19,12 @@ namespace MockSchoolManagement.Models
         /// </summary>
         /// <returns>返回学生信息列表：IEnumerable[Student]类型</returns>
         IEnumerable<Student> GetAllStudents();
+
+        /// <summary>
+        /// 添加学生
+        /// </summary>
+        /// <param name="student">参数类型：Student（添加学生信息）</param>
+        /// <returns>返回添加的学生信息 Student</returns>
+        Student AddStudent(Student student);
     }
 }
