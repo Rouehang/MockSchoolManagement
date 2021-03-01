@@ -74,11 +74,16 @@ namespace MockSchoolManagement.Controllers
         /// <param name="student">参数类型：Student</param>
         /// <returns></returns>
         [HttpPost]
-        public RedirectToActionResult Create(Student student)
+        public IActionResult Create(Student student)
         {
-            Student newStudent = _studentRepository.AddStudent(student);
+            if (ModelState.IsValid)
+            {
+                Student newStudent = _studentRepository.AddStudent(student);
 
-            return RedirectToAction("Detail",new { id = student.Id });
+                return RedirectToAction("Detail", new { id = student.Id });
+            }
+            return View();
+        
         }
     }
 }
