@@ -32,6 +32,7 @@ namespace MockSchoolManagement.Models
         {
             student.Id = _studentList.Max(s => s.Id) + 1;
             _studentList.Add(student);
+            
             return student;
         }
 

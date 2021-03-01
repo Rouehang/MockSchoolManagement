@@ -31,10 +31,12 @@ namespace MockSchoolManagement
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().AddXmlDataContractSerializerFormatters();
 
             //依赖注入
-            services.AddSingleton<IStudentRepository, MockStudentRepository>();
+            //services.AddSingleton<IStudentRepository, MockStudentRepository>();
+            //services.AddScoped<IStudentRepository, MockStudentRepository>();
+            services.AddTransient<IStudentRepository, MockStudentRepository>();
         }
 
         /// <summary>

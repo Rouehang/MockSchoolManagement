@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace MockSchoolManagement.Models
 {
+    /// <summary>
+    /// 学生信息相关接口
+    /// </summary>
     public interface IStudentRepository
     {
         /// <summary>
