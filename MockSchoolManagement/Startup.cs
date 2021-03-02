@@ -40,7 +40,8 @@ namespace MockSchoolManagement
             //依赖注入
             //services.AddSingleton<IStudentRepository, MockStudentRepository>();
             //services.AddScoped<IStudentRepository, MockStudentRepository>();
-            services.AddTransient<IStudentRepository, MockStudentRepository>();
+            //services.AddTransient<IStudentRepository, MockStudentRepository>();
+            services.AddScoped<IStudentRepository, SQLStudentRepository>();
         }
 
         /// <summary>

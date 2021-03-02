@@ -29,5 +29,20 @@ namespace MockSchoolManagement.Models
         /// <param name="student">参数类型：Student（添加学生信息）</param>
         /// <returns>返回添加的学生信息 Student</returns>
         Student AddStudent(Student student);
+
+        /// <summary>
+        /// 修改学生
+        /// </summary>
+        /// <param name="updateStudent">参数类型：Student</param>
+        /// <returns>返回学生信息类型 Student</returns>
+        Student Update(Student updateStudent);
+
+        /// <summary>
+        /// 删除一名学生信息
+        /// </summary>
+        /// <param name="id">参数类型：Int</param>
+        /// <returns>返回学生信息类型：Student</returns>
+        Student Delete(int id);
+
     }
 }

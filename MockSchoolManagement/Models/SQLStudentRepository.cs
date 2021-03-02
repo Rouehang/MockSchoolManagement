@@ -5,24 +5,16 @@ using System.Threading.Tasks;
 
 namespace MockSchoolManagement.Models
 {
-    /// <summary>
-    /// 实现老师类
-    /// </summary>
-    public class MockStudentRepository : IStudentRepository
+    public class SQLStudentRepository : IStudentRepository
     {
-        private List<Student> _studentList;
-        public MockStudentRepository()
+        private readonly AppDbContext _context;
+        public SQLStudentRepository(AppDbContext context)
         {
-            _studentList = new List<Student>()
-            {
-                new Student() {Id = 1,Name = "张三",ClassName=ClassNameEnum.FirstGrade,Major = "计算机科学",Email ="zhangsan@52abp.com" },
-                new Student() {Id = 2,Name = "李四",ClassName=ClassNameEnum.GradeThree,Major = "物流",Email ="lisi@52abp.com" },
-                new Student() {Id = 3,Name = "赵六",ClassName=ClassNameEnum.FirstGrade,Major = "电子商务",Email ="zhaoliu@52abp.com" }
-
-            };
-
+            this._context = context;
+                
         }
 
+      
         /// <summary>
         /// 添加学生
         /// </summary>
@@ -30,9 +22,10 @@ namespace MockSchoolManagement.Models
         /// <returns>返回添加的学生信息 Student</returns>
         public Student AddStudent(Student student)
         {
-            student.Id = _studentList.Max(s => s.Id) + 1;
-            _studentList.Add(student);
             
+            _context.Add(student);
+            _context.SaveChanges();
+
             return student;
         }
 
@@ -43,10 +36,11 @@ namespace MockSchoolManagement.Models
         /// <returns>返回学生信息类型：Student</returns>
         public Student Delete(int id)
         {
-            Student student = _studentList.Where(s => s.Id == id).FirstOrDefault();
+            Student student = _context.students.Where(s => s.Id == id).FirstOrDefault();
             if (student != null)
             {
-                _studentList.Remove(student);
+                _context.Remove(student);
+                _context.SaveChanges();
             }
             return student;
         }
@@ -57,7 +51,7 @@ namespace MockSchoolManagement.Models
         /// <returns>返回所有学生类型：IEnumerable[Student]</returns>
         public IEnumerable<Student> GetAllStudents()
         {
-            var query = _studentList.ToList();
+            var query = _context.students.ToList();
 
             return query;
         }
@@ -69,10 +63,10 @@ namespace MockSchoolManagement.Models
         /// <returns>返回学生信息：Student类型</returns>
         public Student GetStudent(int id)
         {
-          var student=  _studentList.FirstOrDefault(p => p.Id == id);
+            var student = _context.students.FirstOrDefault(p => p.Id == id);
 
             return student;
-        
+
         }
 
 
@@ -83,15 +77,19 @@ namespace MockSchoolManagement.Models
         /// <returns>返回学生信息类型 Student</returns>
         public Student Update(Student updateStudent)
         {
-            Student student = _studentList.Where(p => p.Id == updateStudent.Id).FirstOrDefault();
+            //Student student = _context.students.Where(p => p.Id == updateStudent.Id).FirstOrDefault();
 
-            if (student != null)
-            {
-                student.Name = updateStudent.Name;
-                student.Email = updateStudent.Email;
-                student.ClassName = updateStudent.ClassName;
-            }
-            return student;
+            //if (student != null)
+            //{
+            //    student.Name = updateStudent.Name;
+            //    student.Email = updateStudent.Email;
+            //    student.ClassName = updateStudent.ClassName;
+            //}
+            var student = _context.students.Attach(updateStudent);
+            student.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+            _context.SaveChanges();
+            return updateStudent;
         }
     }
 }
