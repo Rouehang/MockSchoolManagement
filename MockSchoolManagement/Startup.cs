@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MockSchoolManagement
 {
@@ -31,6 +32,9 @@ namespace MockSchoolManagement
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+           // DBConnection作为我们的连接字符串
+            services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("MockStudentDBConnection")));
+
             services.AddMvc().AddXmlDataContractSerializerFormatters();
 
             //依赖注入
