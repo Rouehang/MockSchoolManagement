@@ -46,5 +46,12 @@ namespace MockSchoolManagement.Models
   
         [Display(Name = "学生年纪")]
         public ClassNameEnum? ClassName { get; internal set; }
+
+        /// <summary>
+        /// 学生图片路径
+        /// </summary>
+        public string PhotoPath { get; set; }
+
+
     }
 }
