@@ -9,11 +9,12 @@
 <div class="card-deck">
     @foreach (var student in Model)
     {
+        var photoPath = "~/images/" + (student.PhotoPath ?? "ting.png");
         <div class="card m-3">
             <div class="card-header">
                 <h3 class="card-title">@student.Name</h3>
             </div>
-            <img class="card-img-top" width="100"  src="~/images/abc.jpg" />
+            <img class="card-img-top" src="@photoPath" asp-append-version="true" />
 
             <div class="card-body text-center">
                 <h5 class="card-title">主修科目：@student.Major</h5>
@@ -22,8 +23,8 @@
             <div class="card-footer text-center">
 
                 @*@Html.ActionLink("查看", "Detail", "Home", new { id = student.Id })
-        <a href="@Url.Action("Detail","home",new { id = student.Id })" class="btn btn-primary">查看</a>
-        <a href="/home/detail/@student.Id" class="btn btn-primary">查看</a>*@
+                    <a href="@Url.Action("Detail","home",new { id = student.Id })" class="btn btn-primary">查看</a>
+                    <a href="/home/detail/@student.Id" class="btn btn-primary">查看</a>*@
 
                 @*在后期修改路由后使用这个会自动去适应路由*@
                 <a asp-controller="home" asp-action="detail" asp-route-id="@student.Id" class="btn btn-primary m-1">查看</a>

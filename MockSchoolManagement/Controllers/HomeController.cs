@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using MockSchoolManagement.Models;
 using MockSchoolManagement.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,15 +14,24 @@ namespace MockSchoolManagement.Controllers
     public class HomeController : Controller
     {
 
+        /// <summary>
+        /// 学生相关信息
+        /// </summary>
         private IStudentRepository _studentRepository { get; set; }
+
+        /// <summary>
+        /// 上传图片
+        /// </summary>
+        private IWebHostEnvironment _webHostEnvironment { get; set; }
 
         /// <summary>
         /// 使用构造函数注入的方式注入IStudentRepository 
         /// </summary>
         /// <param name="studentRepository"></param>
-        public HomeController(IStudentRepository studentRepository)
+        public HomeController(IStudentRepository studentRepository,IWebHostEnvironment webHostEnvironment)
         {
             _studentRepository = studentRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -74,13 +85,31 @@ namespace MockSchoolManagement.Controllers
         /// <param name="student">参数类型：Student</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create(Student student)
+        public IActionResult Create(StudentCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
-                Student newStudent = _studentRepository.AddStudent(student);
+                string uniqueFileName = null;
+                if (model.Photo != null)
+                {
+                    //拿到Images的路径
+                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    //为了确保文件名是唯一的，我们在文件名后附加一个新的GUID值和一个下划线
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder,uniqueFileName);
+                    model.Photo.CopyTo(new FileStream(filePath,FileMode.Create));
+                }
+                Student newStudent = new Student
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    Major = model.Major,
+                    ClassName = model.ClassName,
+                    PhotoPath = uniqueFileName,
+                };
+                _studentRepository.AddStudent(newStudent);
+                return RedirectToAction("Detail", new { id = newStudent.Id });
 
-                return RedirectToAction("Detail", new { id = student.Id });
             }
             return View();
         
