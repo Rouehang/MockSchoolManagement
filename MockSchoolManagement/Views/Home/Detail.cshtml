@@ -3,7 +3,12 @@
 @{
 
     ViewBag.Title = "内容详情页";
-    var photoPath = "~/images/" + (Model.Student.PhotoPath ?? "ting.png");
+
+    var photoPath = "~/images/ting.png";
+    if (Model.Student.PhotoPath != null)
+    {
+        photoPath = "~/images/avatars/" + Model.Student.PhotoPath;
+    }
 }
 
 

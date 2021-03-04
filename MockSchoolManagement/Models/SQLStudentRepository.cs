@@ -61,7 +61,7 @@ namespace MockSchoolManagement.Models
         /// </summary>
         /// <param name="id">IInt类型 学生Id</param>
         /// <returns>返回学生信息：Student类型</returns>
-        public Student GetStudent(int id)
+        public Student GetStudentById(int id)
         {
             var student = _context.students.FirstOrDefault(p => p.Id == id);
 

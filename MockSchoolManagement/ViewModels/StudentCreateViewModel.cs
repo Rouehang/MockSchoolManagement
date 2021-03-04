@@ -27,7 +27,7 @@ namespace MockSchoolManagement.ViewModels
         public string Email { get; set; }
 
         [Display(Name = "头像")]
-        public IFormFile Photo { get; set; }
+        public List<IFormFile> Photos { get; set; }
 
         [Display(Name = "年级名")]
         public ClassNameEnum ClassName { get; set; }

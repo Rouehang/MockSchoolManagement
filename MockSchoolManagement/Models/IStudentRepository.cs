@@ -15,7 +15,7 @@ namespace MockSchoolManagement.Models
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Student GetStudent(int id);
+        Student GetStudentById(int id);
 
         /// <summary>
         /// 查询出学生信息集合
