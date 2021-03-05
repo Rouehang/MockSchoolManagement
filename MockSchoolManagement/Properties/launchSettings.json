@@ -16,7 +16,7 @@
       //环境变量
       "environmentVariables": {
         //开发环境
-        "ASPNETCORE_ENVIRONMENT": "Production",
+        "ASPNETCORE_ENVIRONMENT": "Development",
         "MyKey": "appsetting.launchSetting.json Myke"
       }
      
@@ -27,7 +27,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       },
       "applicationUrl": "http://localhost:13380"
     }

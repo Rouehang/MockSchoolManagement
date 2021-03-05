@@ -230,7 +230,8 @@ namespace MockSchoolManagement.Controllers
             return uniqueFileName;
         }
 
-        [HttpDelete]
+
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             _studentRepository.Delete(id);
