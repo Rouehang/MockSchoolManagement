@@ -58,7 +58,7 @@ namespace MockSchoolManagement.Controllers
         //[Route("{id?}")]
         public IActionResult Detail(int? id)
         {
-            var student = _studentRepository.GetStudentById(id??1);
+            var student = _studentRepository.GetStudentById(id ?? 1);
             //判断学生信息是否存在
             if (student == null)
             {
@@ -142,6 +142,12 @@ namespace MockSchoolManagement.Controllers
         public ViewResult Edit(int id)
         {
             Student student = _studentRepository.GetStudentById(id);
+            if (student == null)
+            {
+                Response.StatusCode = 404;
+                return View("StudentNotFound", id);
+            }
+
             StudentEditViewModel studentEditViewModel = new StudentEditViewModel()
             {
                 Id = student.Id,
@@ -169,7 +175,7 @@ namespace MockSchoolManagement.Controllers
 
 
 
-                if (!string.IsNullOrEmpty(model.ExistingPhotoPath))
+                if (model.Photos != null && model.Photos.Count > 0)
                 {
                     //当文件存在的情况把旧的删除
                     if (model.ExistingPhotoPath != null)

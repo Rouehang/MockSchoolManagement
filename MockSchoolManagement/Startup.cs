@@ -60,6 +60,7 @@ namespace MockSchoolManagement
             else
             { //用于处理错误异常
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
+                //app.UseStatusCodePagesWithRedirects("/Error/{0}");
 
             }
             app.UseHttpsRedirection();
