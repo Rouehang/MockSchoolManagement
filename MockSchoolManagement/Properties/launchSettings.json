@@ -27,8 +27,8 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        //"ASPNETCORE_ENVIRONMENT": "Production",
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        //"ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:13380"
     }

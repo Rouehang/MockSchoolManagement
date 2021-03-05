@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MockSchoolManagement.Models;
 using MockSchoolManagement.ViewModels;
 using System;
@@ -26,13 +27,19 @@ namespace MockSchoolManagement.Controllers
         private IWebHostEnvironment _webHostEnvironment { get; set; }
 
         /// <summary>
+        /// 日志记录
+        /// </summary>
+        private ILogger logger { get; set; }
+
+        /// <summary>
         /// 使用构造函数注入的方式注入IStudentRepository 
         /// </summary>
         /// <param name="studentRepository"></param>
-        public HomeController(IStudentRepository studentRepository, IWebHostEnvironment webHostEnvironment)
+        public HomeController(IStudentRepository studentRepository, IWebHostEnvironment webHostEnvironment, ILogger logger)
         {
             _studentRepository = studentRepository;
             _webHostEnvironment = webHostEnvironment;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -58,6 +65,14 @@ namespace MockSchoolManagement.Controllers
         //[Route("{id?}")]
         public IActionResult Detail(int? id)
         {
+
+            logger.LogTrace("Trace(跟踪)Log");
+            logger.LogDebug("Debug(调试)Log");
+            logger.LogInformation("信息(Information)Log");
+            logger.LogWarning("警告(Warning)Log");
+            logger.LogError("错误(Error)Log");
+            logger.LogCritical("严重(Critical)Log");
+
             var student = _studentRepository.GetStudentById(id ?? 1);
             //判断学生信息是否存在
             if (student == null)
