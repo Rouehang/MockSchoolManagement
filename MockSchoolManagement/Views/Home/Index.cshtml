@@ -15,30 +15,34 @@
         {
             photoPath = "~/images/avatars/" + student.PhotoPath;
         }
-        <div class="card m-3">
-            <div class="card-header">
-                <h3 class="card-title">@student.Name</h3>
-            </div>
-            <img class="card-img-top" src="@photoPath" asp-append-version="true" />
-
-            <div class="card-body text-center">
-                <h5 class="card-title">主修科目：@student.Major</h5>
-            </div>
-
-            <div class="card-footer text-center">
-
-                @*@Html.ActionLink("查看", "Detail", "Home", new { id = student.Id })
-                    <a href="@Url.Action("Detail","home",new { id = student.Id })" class="btn btn-primary">查看</a>
-                    <a href="/home/detail/@student.Id" class="btn btn-primary">查看</a>*@
-
-                @*在后期修改路由后使用这个会自动去适应路由*@
-                <a asp-controller="home" asp-action="detail" asp-route-id="@student.Id" class="btn btn-primary m-1">查看</a>
-
-
-                <a asp-controller="home" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-primary m-1">编辑</a>
-                <a href="#" class="btn btn-danger m-1">删除</a>
-            </div>
+    <div class="card m-3">
+        <div class="card-header">
+            <h3 class="card-title">@student.Name</h3>
         </div>
+        <img class="card-img-top" src="@photoPath" asp-append-version="true" />
+
+        <div class="card-body text-center">
+            <h5 class="card-title">主修科目：@student.Major</h5>
+        </div>
+
+        <div class="card-body text-center">
+            <h5 class="card-title">年纪:@student.ClassName.GetDisplayName()</h5>
+        </div>
+
+        <div class="card-footer text-center">
+
+            @*@Html.ActionLink("查看", "Detail", "Home", new { id = student.Id })
+            <a href="@Url.Action("Detail","home",new { id = student.Id })" class="btn btn-primary">查看</a>
+            <a href="/home/detail/@student.Id" class="btn btn-primary">查看</a>*@
+
+            @*在后期修改路由后使用这个会自动去适应路由*@
+            <a asp-controller="home" asp-action="detail" asp-route-id="@student.Id" class="btn btn-primary m-1">查看</a>
+
+
+            <a asp-controller="home" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-primary m-1">编辑</a>
+            <a asp-controller="home" asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger m-1">删除</a>
+        </div>
+    </div>
     }
 </div>
 

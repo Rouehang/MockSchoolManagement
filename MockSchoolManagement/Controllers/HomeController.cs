@@ -58,6 +58,14 @@ namespace MockSchoolManagement.Controllers
         //[Route("{id?}")]
         public IActionResult Detail(int? id)
         {
+            var student = _studentRepository.GetStudentById(id??1);
+            //判断学生信息是否存在
+            if (student == null)
+            {
+                Response.StatusCode = 404;
+                return View("StudentNotFound", id);
+            }
+
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
                 //当Id为空是输入1 当有值时则为id
@@ -216,11 +224,19 @@ namespace MockSchoolManagement.Controllers
                         photo.CopyTo(fileStream);
                     }
 
-
                 }
 
             }
             return uniqueFileName;
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            _studentRepository.Delete(id);
+
+            return RedirectToAction("Index");
+
         }
 
 

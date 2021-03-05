@@ -1,7 +1,6 @@
 ﻿@model HomeDetailsViewModel
 
 @{
-
     ViewBag.Title = "内容详情页";
 
     var photoPath = "~/images/ting.png";
@@ -26,11 +25,13 @@
                 <h4>学生ID : @Model.Student.Id</h4>
                 <h4>   邮箱 : @Model.Student.Email</h4>
                 <h4>主修科目 : @Model.Student.Major</h4>
+                <h4>年纪 : @Model.Student.ClassName.GetDisplayName()</h4>
+                
             </div>
             <div class="card-footer text-center">
                 <a asp-controller="home" asp-action="Index" class="btn btn-primary">返回</a>
-                <a href="#" class="btn btn-primary">编辑</a>
-                <a href="#" class="btn btn-danger">删除</a>
+                <a asp-controller="home" asp-action="Edit" asp-route-id="@Model.Student.Id" class="btn btn-primary">编辑</a>
+                <a asp-controller="home" asp-action="Delete" asp-route-id="@Model.Student.Id" class="btn btn-danger">删除</a>
             </div>
         </div>
     </div>

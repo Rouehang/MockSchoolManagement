@@ -52,15 +52,15 @@ namespace MockSchoolManagement
         /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILogger<Startup> logger)
         {
+            //如果环境是Development serve Developer Exception Page
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+            { //用于处理错误异常
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
+
             }
             app.UseHttpsRedirection();
 
