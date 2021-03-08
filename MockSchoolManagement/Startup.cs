@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NLog.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
+using MockSchoolManagement.CustomerMiddlewares;
 
 namespace MockSchoolManagement
 {
@@ -33,7 +35,7 @@ namespace MockSchoolManagement
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-           // DBConnection作为我们的连接字符串
+            // DBConnection作为我们的连接字符串
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("MockStudentDBConnection")));
 
             services.AddMvc().AddXmlDataContractSerializerFormatters();
@@ -42,8 +44,39 @@ namespace MockSchoolManagement
             //services.AddSingleton<IStudentRepository, MockStudentRepository>();
             //services.AddScoped<IStudentRepository, MockStudentRepository>();
             //services.AddTransient<IStudentRepository, MockStudentRepository>();
-            services.AddScoped<IStudentRepository, SQLStudentRepository>();      
-            
+            services.AddScoped<IStudentRepository, SQLStudentRepository>();
+
+
+
+
+            //配置密码默认设置
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+            });
+
+            //配置ASP.NET Core Identity服务
+            //在 AddIdentity() 服务中使用
+            //AddErrorDescriber()方法覆盖默认的错误提示内容
+            services.AddIdentity<IdentityUser, IdentityRole>().AddErrorDescriber<CustomIdentityErrorDescriber>().AddEntityFrameworkStores<AppDbContext>();
+
+            #region 另外一种配置密码的设置
+            //   services.AddIdentity  <IdentityUser,IdentityRole > (options =>
+            //   {
+            //       options.Password.RequiredLength = 6;
+            //       options.Password.RequiredUniqueChars = 3;
+            //       options.Password.RequireNonAlphanumeric = false;
+            //   })
+            //.AddEntityFrameworkStores<AppDbContext>();
+            #endregion
+
+
+
+
         }
 
         /// <summary>
@@ -51,27 +84,28 @@ namespace MockSchoolManagement
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //如果环境是Development serve Developer Exception Page
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            { //用于处理错误异常
+            else if (env.IsStaging() || env.IsProduction() || env.IsEnvironment("UAT"))
+            {
+                //用于处理错误异常
+
+                app.UseExceptionHandler("/Error");
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
-                //app.UseStatusCodePagesWithRedirects("/Error/{0}");
 
             }
-
-            ////启用NLog作为日志提供程序之一
-            //logger.AddNLog();//添加NLog
-
 
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+
+            //添加验证中间件
+            app.UseAuthentication();
 
             app.UseRouting();
 
@@ -86,7 +120,7 @@ namespace MockSchoolManagement
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-     
+
 
             #region 旧代码
             ////当是开发环境才会提示开发异常页面

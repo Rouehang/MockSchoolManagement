@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MockSchoolManagement.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MockSchoolManagement.Models
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -53,6 +54,8 @@ namespace MockSchoolManagement.Models
               Email = "lizz@52abp.com",
           });
             #endregion
+
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Seed();
 
