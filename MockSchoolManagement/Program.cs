@@ -33,7 +33,7 @@ namespace MockSchoolManagement
              logging.AddDebug();
              logging.AddEventSourceLogger();
              //启用NLog作为日志提供程序之一
-             logging.SetMinimumLevel(LogLevel.Trace);
+             //logging.SetMinimumLevel(LogLevel.Trace);
              //logging.AddNlog();
 
          }).UseStartup<Startup>();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NLog.Extensions.Logging;
 
 namespace MockSchoolManagement
 {
@@ -50,7 +51,7 @@ namespace MockSchoolManagement
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
         {
             //如果环境是Development serve Developer Exception Page
             if (env.IsDevelopment())
@@ -63,7 +64,10 @@ namespace MockSchoolManagement
                 //app.UseStatusCodePagesWithRedirects("/Error/{0}");
 
             }
-      
+
+            ////启用NLog作为日志提供程序之一
+            //logger.AddNLog();//添加NLog
+
 
             app.UseHttpsRedirection();
 
