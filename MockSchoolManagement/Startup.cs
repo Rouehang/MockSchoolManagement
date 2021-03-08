@@ -63,6 +63,8 @@ namespace MockSchoolManagement
                 //app.UseStatusCodePagesWithRedirects("/Error/{0}");
 
             }
+      
+
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();

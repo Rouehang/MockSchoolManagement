@@ -15,8 +15,10 @@
       "launchBrowser": true,
       //环境变量
       "environmentVariables": {
-        //开发环境
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        //产品环境
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        ////开发环境
+        //"ASPNETCORE_ENVIRONMENT": "Development",
         "MyKey": "appsetting.launchSetting.json Myke"
       }
      
@@ -26,11 +28,12 @@
     "MockSchoolManagement": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "http://localhost:13380",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        //"ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:13380"
+        //"ASPNETCORE_ENVIRONMENT": "Production",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MyKey": "appsetting.launchSetting.json Myke"
+      }
     }
   }
 }

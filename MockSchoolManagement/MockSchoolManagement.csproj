@@ -8,8 +8,8 @@
 	  InProcess：进程内
 	  OutOfProcess：进程外
 	  -->
-	  <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-	  <!--<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>-->
+	  <!--<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>-->
+	  <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
 
 	  <!--管理文件的key值-->
 	  <UserSecretsId>f34ccd4f-a063-44f5-9d89-b87c705a8205</UserSecretsId>
@@ -32,6 +32,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.11.0" />
   </ItemGroup>
 
 </Project>

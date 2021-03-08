@@ -35,11 +35,17 @@ namespace MockSchoolManagement.Controllers
         /// 使用构造函数注入的方式注入IStudentRepository 
         /// </summary>
         /// <param name="studentRepository"></param>
-        public HomeController(IStudentRepository studentRepository, IWebHostEnvironment webHostEnvironment, ILogger logger)
+        //public HomeController(IStudentRepository studentRepository, IWebHostEnvironment webHostEnvironment, ILogger logger)
+        //{
+        //    _studentRepository = studentRepository;
+        //    _webHostEnvironment = webHostEnvironment;
+        //    this.logger = logger;
+        //}
+
+        public HomeController(IStudentRepository studentRepository, IWebHostEnvironment webHostEnvironment)
         {
             _studentRepository = studentRepository;
-            _webHostEnvironment = webHostEnvironment;
-            this.logger = logger;
+            _webHostEnvironment = webHostEnvironment;         
         }
 
         /// <summary>
@@ -66,12 +72,12 @@ namespace MockSchoolManagement.Controllers
         public IActionResult Detail(int? id)
         {
 
-            logger.LogTrace("Trace(跟踪)Log");
-            logger.LogDebug("Debug(调试)Log");
-            logger.LogInformation("信息(Information)Log");
-            logger.LogWarning("警告(Warning)Log");
-            logger.LogError("错误(Error)Log");
-            logger.LogCritical("严重(Critical)Log");
+            //logger.LogTrace("Trace(跟踪)Log");
+            //logger.LogDebug("Debug(调试)Log");
+            //logger.LogInformation("信息(Information)Log");
+            //logger.LogWarning("警告(Warning)Log");
+            //logger.LogError("错误(Error)Log");
+            //logger.LogCritical("严重(Critical)Log");
 
             var student = _studentRepository.GetStudentById(id ?? 1);
             //判断学生信息是否存在

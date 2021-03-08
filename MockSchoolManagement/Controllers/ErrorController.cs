@@ -16,6 +16,7 @@ namespace MockSchoolManagement.Controllers
         /// </summary>
         private ILogger<ErrorController> logger { get; set; }
 
+
         ///<summary>
         /// 注入ASP.NET Core ILogger服务
         /// 将控制器类型指定为泛型参数
